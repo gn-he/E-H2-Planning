@@ -1,0 +1,3 @@
+Case,FolderName,Region,LDS,H2Gen_avai,H2Gen_integer,CO2_price,EL_cost_factor,Liq_plant_cost_percent,LOHC_dem_cost_percent,CO2_max_ton_MWh,CO2Cap,CO2_price_option,H2_emission_rate,hydrogen_demand_option,hydrogen_demand_factor,BEV_penetration,FCEV_penetration,SMR_option_avai,EL_option_avai,hydrogen_generation_option,extra_pD_avai,H2_to_power_option,Truck_option_avai,share_truck_options,Transmission_cost_factor,Pipe_option_avai,Pipe_integer,solver_option,Method,Crossover,SolutionType
+1,1,NE,0,0,0,0,0.7,100,100,0,0,1,0,1,1,0,0.2,1,1,1,0,1,1,1,1,0,0,1,2,0,2
+2,30,NE,0,0,0,0,0.7,100,100,0,0,1,0,1,1,0,0.2,1,1,1,0,1,1,1,1,0,0,1,2,0,2

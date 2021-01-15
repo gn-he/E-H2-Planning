@@ -1,0 +1,14 @@
+{'CWD_DIR': 'C:\\Users\\dharik\\Documents\\FutureOfStorage\\Northeast\\Cathy_Modeling\\Scripts\\R7_EACMeeting', 'GEN_DIR': '..\\..\\1_Input_Data\\GeneratorData\\', 'GEN_INPUT_DIR': '..\\..\\1_Input_Data\\GeneratorData\\Inputs_2020_03_26\\', 'DR_DIR': '..\\..\\1_Input_Data\\GeneratorData\\Demand_Flex\\', 'HYDRO_DIR': '..\\..\\1_Input_Data\\GeneratorData\\Canada_Hydro\\', 'RENEW_DIR': '..\\..\\1_Input_Data\\RenewData\\', 'VRE_DIR': '..\\..\\1_Input_Data\\RenewData\\zone_cf_bins_v3\\', 'NE_LOAD_DIR': '..\\..\\1_Input_Data\\LoadData\\Northeast_Load\\', 'INTER_DIR': '..\\..\\1_Input_Data\\InterData\\R7_CoupledModel_June2020\\', 'GENX_INPUT_DIR': '..\\..\\2_GenX_Inputs\\R7_CoupledModel_June2020\\', 'BASE_GENX_INPUT_DIR': '..\\..\\1_Input_Data\\GeneratorData\\Inputs_2020_03_26\\', 'NumPeriods': 8760, 'ScenType': 'grnfld', 'ModelCase': 'Rep_Weeks', 'VREYear': 2013, 'OnshoreWindBins': 3, 'PVBins': 1, 'ClusteringInputs': {'YearList': range(2007, 2014), 'LoadWeight': 1, 'PossibleNClusters': [20, 25, 30], 'NumGrpDays': 7, 'ExtremePeriodsinClusters': 'yes', 'InclHydro': True, 'InputData':         Load_MW_z1    Load_MW_z2  ...  Hydro_RoR_6  Hydro_Can
+0      1202.544947   8579.284969  ...     0.508941   0.604153
+1      1202.544947   8579.284969  ...     0.508941   0.604153
+2      1141.756424   8086.031229  ...     0.508941   0.604153
+3      1089.899999   7660.278684  ...     0.508941   0.604153
+4      1057.292914   7319.606862  ...     0.508941   0.604153
+...            ...           ...  ...          ...        ...
+61147  1741.117119  11955.608802  ...     0.469867   0.643707
+61148  1709.972650  11837.199306  ...     0.469867   0.643707
+61149  1654.175778  11514.513032  ...     0.469867   0.643707
+61150  1570.670994  11086.454849  ...     0.469867   0.643707
+61151  1485.700825  10524.958228  ...     0.469867   0.643707
+
+[61152 rows x 48 columns], 'RefAnnualgenTWh': 282.23186740765516, 'MaxMinWksList': ['w101', 'w155', 'w16', 'w17', 'w183', 'w205', 'w250', 'w27', 'w277', 'w288', 'w294', 'w32', 'w330', 'w363', 'w44', 'w6', 'w84'], 'NClusters': 30}, 'StorageTechIncl': 'Li-ionVRFH2', 'GenDataVer': 'mVRF_mH2', 'Electrification': 'RefElec', 'GENX_INPUT_SUBDIR': '..\\..\\2_GenX_Inputs\\R7_CoupledModel_June2020\\VRF_H2'}

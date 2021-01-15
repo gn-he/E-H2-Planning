@@ -1,0 +1,8 @@
+Setting,warm_start,fix_investment_option,TD_factor,Zone_set,PT_set,RT_set,K_prod_set,K_prod_set_int,K_stor_set,G_H2_set,Num_week,FCEV_penetration,BEV_penetration,H2T_constant,CO2_price_option,CO2_price,emission_scenario,H2_emission_rate,hydrogen_demand_option,hydrogen_demand_factor,hydrogen_generation_option,SMR_option_avai,EL_option_avai,extra_pD_avai,H2UnmetPrice,Gas_Price_factor,EL_cost_factor,Liq_plant_cost_factor,Pipe_cost_factor,Transmission_cost_factor,gen_category,Pipe_option_avai,Pipe_integer,Truck_option_avai,share_truck_options,Truck_traffic_limit,Truck_integer_model,H2_to_power_option,H2_to_power_cost_factor,lc_compression_model,no_integer,H2Gen_integer,truck_model_simp,H2Gen_avai,H2Gen_zone_option,H2Gen_int_zone_option,GasPrice,MIPGap,MacOrWindows,Dual_MIP,Feasib_Tol,Pre_Solve,Crossover,Method,NumericFocus,Optimal_Tol
+Value,0,0,1,1,1,1,1,4,1,1,30,0.2,0,0,1,0,0,0,1,1,1,1,1,0,1000000,1,0.3,1,1,1,0,1,0,1,1,10000,0,0,1,2,1,0,0,1,1,1,5,0.01,Mac,0,1.00E-06,2,-1,-1,0,1.00E-06
+,,,,2,,2,4,,2,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1,5,,,,,,,,,
+,,,,3,,,5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1,5,,,,,,,,,
+,,,,4,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,0,5,,,,,,,,,
+,,,,5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1,5,,,,,,,,,
+,,,,6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1,5,,,,,,,,,
+,,,,7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,0,5,,,,,,,,,

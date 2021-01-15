@@ -1,0 +1,3 @@
+,etaPfG,rhoPfG_min,rhoPfG_max,PfGSize_MWe,PfGUnitCapex_per_unit,PfG_VOM_per_MWh,PfG_FOM_per_MW_yr,tau_up_hour,tau_down_hour,lifetime,,
+CCGT,0.65,0,1,50,5.00E+07,1.67E+00,1.10E+04,1,1,25,,
+Fuel Cell,0.6,0,1,1,3.30E+06,1.67E+00,1.10E+04,1,1,15,,

@@ -1,0 +1,9 @@
+,etaP2G_MWh_per_tonne,etaGas_MMBtu_per_tonne,rhoH2Gen_min,rhoH2Gen_max,H2GenSize_tonne_per_hour,P2GenUnitCapex_per_unit,P2GenOPEX,GasPrice,start_up_cost,tau_up_hour,tau_down_hour,min_up_ratio,generation_emission_rate_tonne_per_tonne,Cost_percentage,lifetime
+Small Electrolyzer,45,0,0.1,1,0.06,900000,0.015,5.36,0,1,1,0,0,1,10
+Large Electrolyzer,45,0,0.1,1,1.9,28500000,0.015,5.36,0,1,1,0,0,1,15
+Small SMR,0,174.8,0.9,1,0.06,1960000,0.047,5.36,0,1,1,0,10,1,25
+Large SMR,0,146.3,0.9,1,9.167,278000000,0.047,5.36,0,3,1,0,10,1,25
+Large SMR with CCS 90%,0,160,0.9,1,9.167,391000000,0.03,6.32,0,3,1,0,1,1,25
+Large SMR with CCS 56%,0,152,0.9,1,9.167,246000000,0.03,6.32,0,3,1,0,4.4,1,25
+ATR,0,124,0.9,1,20.83,578160000,0.047,5.36,0,3,1,0,8.3,1,25
+ATR with CCS,0,136.4,0.9,1,20.83,1069640000,0.03,6.32,0,3,1,0,0.83,1,25

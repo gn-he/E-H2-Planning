@@ -1,0 +1,5 @@
+,UnitCompressCost_per_tonne,UnitCompressEnergy_MWh_per_tonne
+No compression,0,0
+Low-mid pressure,30,0.3
+Low-high pressure,270,1
+Liquefaction,30,11
