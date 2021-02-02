@@ -18,7 +18,7 @@ genx_path = pwd()
 push!(LOAD_PATH, genx_path)
 println("Loading hydrogen packages")
 
-using GenX_Modular
+using PowerCapExp
 using JuMP
 using DataFrames #This package allows put together data into a matrix
 # using Gurobi #Gurobi solver
