@@ -29,7 +29,7 @@ using CPLEX
 
 # using Revise
 
-using PowerCapExp
+using GenX_Modular
 using Hydrogen_Modular
 
 # Import scenarios of interest and store in dataframe

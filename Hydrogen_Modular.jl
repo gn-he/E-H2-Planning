@@ -18,7 +18,7 @@ genx_path = pwd()
 push!(LOAD_PATH, genx_path)
 println("Loading hydrogen packages")
 
-using PowerCapExp
+using GenX_Modular
 using JuMP
 using DataFrames #This package allows put together data into a matrix
 # using Gurobi #Gurobi solver
@@ -571,6 +571,7 @@ function load_H2_inputs(setup::Dict,path::AbstractString)
         H2GenSize = (ones(K_prod_total,Z_total) .* H2GenData[!,:H2GenSize_tonne_per_hour])[K_prod_set,Z_set] # tonne-H2/hour
         # P2GenUnitCapex = H2GenSize .* [900*53/LHV,910] .* 1000 # $/unit
         P2GenUnitCapex = (H2GenData[!,:P2GenUnitCapex_per_unit])[K_prod_set,:] # $/unit
+		P2GenOPEX = (H2GenData[!,:P2GenOPEX])[K_prod_set,:] # $/unit
 		start_up_cost = (round.(Int,ones(K_prod_total,Z_total) .* H2GenData[!,:start_up_cost]))[K_prod_set,Z_set] # $
         tau_up = (round.(Int,ones(K_prod_total,Z_total) .* H2GenData[!,:tau_up_hour]))[K_prod_set,Z_set] # hour
         tau_down = (round.(Int,ones(K_prod_total,Z_total) .* H2GenData[!,:tau_down_hour]))[K_prod_set,Z_set] # hour
@@ -586,6 +587,7 @@ function load_H2_inputs(setup::Dict,path::AbstractString)
         inputs_H2["rhoH2Gen_max"] = rhoH2Gen_max
         inputs_H2["H2GenSize"] = H2GenSize
         inputs_H2["P2GenUnitCapex"] = P2GenUnitCapex
+		inputs_H2["P2GenOPEX"] = P2GenOPEX
 		inputs_H2["start_up_cost"] = start_up_cost
         inputs_H2["tau_up"] = tau_up
         inputs_H2["tau_down"] = tau_down
@@ -613,6 +615,7 @@ function load_H2_inputs(setup::Dict,path::AbstractString)
         H2GenSize_int = (ones(K_prod_total,Z_total) .* H2GenData[!,:H2GenSize_tonne_per_hour])[K_prod_set_int,Z_set] # tonne-H2/hour
         # P2GenUnitCapex = H2GenSize .* [900*53/LHV,910] .* 1000 # $/unit
         P2GenUnitCapex_int = (H2GenData[!,:P2GenUnitCapex_per_unit])[K_prod_set_int,:] # $/unit
+		P2GenOPEX_int = (H2GenData[!,:P2GenOPEX])[K_prod_set_int,:] # $/unit/year
 		start_up_cost_int = (round.(Int,ones(K_prod_total,Z_total) .* H2GenData[!,:start_up_cost]))[K_prod_set_int,Z_set] # $
 		tau_up_int = (round.(Int,ones(K_prod_total,Z_total) .* H2GenData[!,:tau_up_hour]))[K_prod_set_int,Z_set] # hour
         tau_down_int = (round.(Int,ones(K_prod_total,Z_total) .* H2GenData[!,:tau_down_hour]))[K_prod_set_int,Z_set] # hour
@@ -627,7 +630,9 @@ function load_H2_inputs(setup::Dict,path::AbstractString)
         inputs_H2["rhoH2Gen_max_int"] = rhoH2Gen_max_int
         inputs_H2["H2GenSize_int"] = H2GenSize_int
         inputs_H2["P2GenUnitCapex_int"] = P2GenUnitCapex_int
+		inputs_H2["P2GenOPEX_int"] = P2GenOPEX_int
 		inputs_H2["start_up_cost_int"] = start_up_cost_int
+		inputs_H2["P2GenOPEX_int"] = P2GenOPEX_int
         inputs_H2["tau_up_int"] = tau_up_int
         inputs_H2["tau_down_int"] = tau_down_int
         inputs_H2["min_up_ratio_int"] = min_up_ratio_int
@@ -3094,6 +3099,7 @@ function H2_Gen(HY::Model, dModuleArgs::Dict)
 	rhoH2Gen_max = inputs_H2["rhoH2Gen_max"]
 	H2GenSize = inputs_H2["H2GenSize"]
 	P2GenUnitCapex = inputs_H2["P2GenUnitCapex"]
+	P2GenOPEX = inputs_H2["P2GenOPEX"]
 	start_up_cost = inputs_H2["start_up_cost"]
 	tau_up = inputs_H2["tau_up"]
 	tau_down = inputs_H2["tau_down"]
@@ -3106,6 +3112,7 @@ function H2_Gen(HY::Model, dModuleArgs::Dict)
 	rhoH2Gen_max_int = inputs_H2["rhoH2Gen_max_int"]
 	H2GenSize_int = inputs_H2["H2GenSize_int"]
 	P2GenUnitCapex_int = inputs_H2["P2GenUnitCapex_int"]
+	P2GenOPEX_int = inputs_H2["P2GenOPEX_int"]
 	start_up_cost_int = inputs_H2["start_up_cost_int"]
 	tau_up_int = inputs_H2["tau_up_int"]
 	tau_down_int = inputs_H2["tau_down_int"]
@@ -3118,7 +3125,7 @@ function H2_Gen(HY::Model, dModuleArgs::Dict)
 	hydrogen_demand_option = inputs_H2["hydrogen_demand_option"]
 	EL_cost_factor = inputs_H2["EL_cost_factor"]
 	# P2GenUnitCapex[1]=P2GenUnitCapex[1]*EL_cost_factor
-	P2GenUnitCapex[1]=P2GenUnitCapex[1]/450*1000*EL_cost_factor
+	P2GenUnitCapex[1]=round(P2GenUnitCapex[1]/450*1000*EL_cost_factor)
 
 	K_EL = 1
 
@@ -3208,11 +3215,11 @@ function H2_Gen(HY::Model, dModuleArgs::Dict)
 	## Objective Function Expressions ##
 	discount_factor = dExpressions_H2["discount_factor"]
 
-	@expression(HY, CAPEX_H2G, ( sum(inputs_H2["discount_factor_P2Gen"][k,z]*vN[k,z]* P2GenUnitCapex[k] for k=1:K_prod,z=1:Z) + inputs_H2["discount_factor_P2Gen_int"][k,z]*sum(vN_int[k,z]* P2GenUnitCapex_int[k] for k=1:K_prod_int,z=1:Z) ) )
+	@expression(HY, CAPEX_H2G, ( sum(inputs_H2["discount_factor_P2Gen"][k,z]*vN[k,z]* P2GenUnitCapex[k] + P2GenOPEX[k]*vN[k,z]* P2GenUnitCapex[k] for k=1:K_prod,z=1:Z) + sum(inputs_H2["discount_factor_P2Gen_int"][k,z]*vN_int[k,z]* P2GenUnitCapex_int[k] + P2GenOPEX_int[k]*vN_int[k,z]* P2GenUnitCapex_int[k] for k=1:K_prod_int,z=1:Z) ) )
 	dExpressions_H2["CAPEX_H2G"] = CAPEX_H2G
 	dObjective_H2["CAPEX_H2G"] = CAPEX_H2G
 
-	@expression(HY, CAPEX_EL, sum(inputs_H2["discount_factor_P2Gen"][k,z]*vN[k,z]* P2GenUnitCapex[k] for k=1:K_EL,z=1:Z))
+	@expression(HY, CAPEX_EL, sum(inputs_H2["discount_factor_P2Gen"][k,z]*vN[k,z]* P2GenUnitCapex[k] + P2GenOPEX[k]*vN[k,z]* P2GenUnitCapex[k] for k=1:K_EL,z=1:Z))
 	dExpressions_H2["CAPEX_EL"] = CAPEX_EL
 
 	@expression(HY, CAPEX_SMR, CAPEX_H2G - CAPEX_EL)
@@ -3664,17 +3671,24 @@ function H2_Storage(HY::Model, dModuleArgs::Dict)
 		dfPeriodMap = inputs["Period_Map"] # Dataframe that maps modeled periods to representative periods
 		NPeriods = size(inputs["Period_Map"])[1]
 		for n in 1:NPeriods # Modeled periods
+			w_rep = dfPeriodMap[!,:RepPeriod_index][n] # ordered index of corresponding representative period
 			for k in 1:K_stor
 				for z in 1:Z
 					# Storage at beginning of period w = storage at beginning of period w-1+ storage built up in period w (after n representative periods)
 					if n<NPeriods  #Multiply storage build up term from prior period with corresponding weight
-						@constraint(HY, vH2SOCw[k,z,n+1] == vH2SOCw[k,z,n] + vH2dSOC[k,z,dfPeriodMap[!,:RepPeriod_index][n]])
+						@constraint(HY, vH2SOCw[k,z,n+1] == vH2SOCw[k,z,n] + vH2dSOC[k,z,w_rep])
 					else # Last period is linked to first period
-						@constraint(HY,vH2SOCw[k,z,1] == vH2SOCw[k,z,n] + vH2dSOC[k,z,dfPeriodMap[!,:RepPeriod_index][n]])
+						@constraint(HY,vH2SOCw[k,z,1] == vH2SOCw[k,z,n] + vH2dSOC[k,z,w_rep])
 					end
 
 					# Storage at beginning of each modeled period cannot exceed installed energy capacity
 					@constraint(HY, vH2SOCw[k,z,n] <= vH2StorCap[k,z])
+
+					if (dfPeriodMap[!,:RepPeriod][n]==n) # Checking if modeled period is a representative period
+					# Initial storage level for representative periods must also adhere to sub-period storage inventory balance
+					# Initial storage = Final storage - change in storage inventory across representative period
+						@constraint(HY,vH2SOCw[k,z,n] == vH2StorEnergy[k,z,Tw*(w_rep-1)+Tw] - vH2dSOC[k,z,w_rep] )
+					end
 				end
 			end
 		end
